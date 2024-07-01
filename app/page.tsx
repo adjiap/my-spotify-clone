@@ -29,7 +29,11 @@ export default function Home() {
             gap-3
             mt-4
           ">
-            <ListItem />
+            <ListItem 
+              image="/images/liked.png"  // I'm not sure why yet, but this path seem to bypass the "public" folder. Does that mean that it's automatically considered?
+              name="Liked Songs"
+              href="liked"
+            />
           </div>
         </div>
       </Header>
