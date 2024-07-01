@@ -1,4 +1,5 @@
 import Header from "@/components/header";
+import ListItem from "@/components/listitem";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
             gap-3
             mt-4
           ">
+            <ListItem />
           </div>
         </div>
       </Header>
