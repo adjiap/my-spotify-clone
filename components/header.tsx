@@ -119,7 +119,27 @@ const Header: React.FC<HeaderProps> = (
                     "
                 >
                     <div>
-                        <Button />
+                        {/* by adding the className here, it will customize the button, instead of using the default information in the 'Button' component */}
+                        <Button
+                            onClick={() => {}} // Placeholder for future behaviour when clicking
+                            className="
+                                bg-transparent
+                                text-neutral-300
+                                font-medium
+                        ">
+                            Sign Up
+                        </Button>
+                    </div>
+                    <div>
+                        <Button
+                            onClick={() => {}}
+                            className="
+                                bg-white
+                                px-6
+                                py-2
+                        ">
+                            Log in
+                        </Button>
                     </div>
                 </div>
             </div>
