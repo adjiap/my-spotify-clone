@@ -69,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({children}) => {
             </div>
             <main className="
                 h-full
-                flex1
+                flex-1
                 overflow-y-auto
                 py-2
             ">
