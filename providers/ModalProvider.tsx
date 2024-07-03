@@ -18,7 +18,7 @@ const ModalProvider = () => {
         <>
             Modals!
         </>
-    )
+    );
 }
 
 export default ModalProvider;
