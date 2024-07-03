@@ -4,6 +4,7 @@ import "./globals.css";
 import Sidebar from "@/components/sidebar"
 import SupabaseProvider from "@/providers/SupabaseProvider";
 import UserProvider from "@/providers/UserProvider";
+import ModalProvider from "@/providers/ModalProvider";
 
 const font = Figtree({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         {/* Adding custom SupabaseProvider to wrap our application with the Supabase client */}
         <SupabaseProvider>
           <UserProvider>
+            <ModalProvider />
             <Sidebar>
               {children}
             </Sidebar>
