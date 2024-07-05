@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Modal from "./modal";
 import {
     useSessionContext,
@@ -16,6 +16,14 @@ const AuthModal = () => {
     const router = useRouter();
     const { session } = useSessionContext();
     const { onClose, isOpen } = useAuthModal(); 
+
+    // When user signs in successfully, the modal will close
+    useEffect(() => {
+        if (session) {
+            router.refresh();
+            onClose();
+        }
+    }, [session, router, onClose]);  // The dependency array
 
     const onChange = (open: boolean) => {
         if (!open){
