@@ -1,6 +1,7 @@
 import getSongs from "@/actions/getSongs";
 import Header from "@/components/header";
 import ListItem from "@/components/listitem";
+import PageContent from "@/components/pagecontent";
 
 // No caching, and will always refresh during boot up
 export const revalidate = 0;
@@ -48,9 +49,7 @@ export default async function Home() {
             Newest Songs
           </h1>
         </div>
-        <div>
-          {songs.map((song) => <div>{song.title}</div>)}
-        </div>
+        <PageContent songs={songs}/>
       </div>
     </div>
   );
