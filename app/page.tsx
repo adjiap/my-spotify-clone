@@ -1,7 +1,12 @@
+import getSongs from "@/actions/getSongs";
 import Header from "@/components/header";
 import ListItem from "@/components/listitem";
 
-export default function Home() {
+// No caching, and will always refresh during boot up
+export const revalidate = 0;
+
+export default async function Home() {
+  const songs = await getSongs ();
   return (
     <div className="
     bg-neutral-900
@@ -44,7 +49,7 @@ export default function Home() {
           </h1>
         </div>
         <div>
-          List of Songs!
+          {songs.map((song) => <div>{song.title}</div>)}
         </div>
       </div>
     </div>
