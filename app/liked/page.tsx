@@ -2,6 +2,7 @@ import getLikedSongs from "@/actions/getLikedSongs";
 import Header from "@/components/header";
 import React from "react";
 import Image from "next/image";
+import LikedContent from "./components/likedcontent";
 
 export const revalidate = 0;
 
@@ -70,6 +71,7 @@ const Liked = async () => {
                     </div>
                 </div>
             </Header>
+            <LikedContent songs={songs}/>
         </div>
     );
 }
