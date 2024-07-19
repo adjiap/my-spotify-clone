@@ -7,6 +7,7 @@ import { Song } from "@/types";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
+import Slider from "./slider";
 
 
 interface PlayerContentProps {
@@ -119,6 +120,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
                         size={34}
                     />
                 </div>
+                <Slider />
             </div>
         </div>
     )
