@@ -119,8 +119,8 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
                         className="cursor-pointer"
                         size={34}
                     />
+                    <Slider />
                 </div>
-                <Slider />
             </div>
         </div>
     )
