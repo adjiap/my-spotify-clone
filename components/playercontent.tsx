@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MediaItem from "./mediaitem";
 import LikeButton from "./likebutton";
 import { Song } from "@/types";
@@ -9,6 +9,7 @@ import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import Slider from "./slider";
 import usePlayer from "@/hooks/usePlayer";
+import useSound from "use-sound";
 
 
 interface PlayerContentProps {
@@ -21,9 +22,11 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
     songUrl
 }) => {
     const player = usePlayer();
+    const [volume, setVolume] = useState(1);
+    const [isPlaying, setIsPlaying] = useState(false);
 
-    const Icon = false ? BsPauseFill : BsPlayFill;
-    const VolumeIcon = true ? HiSpeakerXMark : HiSpeakerWave
+    const Icon = isPlaying ? BsPauseFill : BsPlayFill;
+    const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
 
     const onPlayPrevious = () => {
         if (player.ids.length === 0) {
@@ -55,6 +58,47 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
         player.setId(nextSong);
     };
 
+    const [play, { pause, sound }] = useSound(
+        // HACK/INFO: this `songUrl` can't change dynamically, hence why in `Player` component we use the key `key` 
+        songUrl,
+        {
+            volume: volume,
+            // INFO: The following on* is written all in lower cases, as it's a state instead of a variable
+            onplay: () => setIsPlaying(true),
+            onend: () => {
+                setIsPlaying(false);
+                onPlayNext();
+            },
+            onpause: () => setIsPlaying(false),
+            format: ["mp3"]    // INFO: MUST be here so that it can actually play sounds. WARNING, it's not the extension! Hence why it has no dots!
+        },
+    );
+
+    useEffect(() => {
+        sound?.play();
+
+        return () => {
+            sound?.unload();
+        }
+    }, [sound]);
+
+    const handlePlay = () => {
+        if (!isPlaying) {
+            play();
+        } else {
+            pause();
+        };
+    };
+
+    const toggleMute = () => {
+        if (volume === 0) {
+            setVolume(1);
+        } else {
+            setVolume(0);
+        };
+    };
+
+
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 h-full">
             <div className="
@@ -78,7 +122,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
                 "
             >
                 <div
-                    onClick={() => {}}
+                    onClick={handlePlay}
                     className="
                         h-10
                         w-10
@@ -118,7 +162,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
                     "
                     />
                 <div
-                    onClick={() => {}}
+                    onClick={handlePlay}
                     className="
                         flex
                         items-center
@@ -147,11 +191,14 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
             <div className="hidden md:flex w-full justify-end pr-2">
                 <div className="flex items-center gap-x-2 w-[120px]">
                     <VolumeIcon 
-                        onClick={() => {}}
+                        onClick={toggleMute}
                         className="cursor-pointer"
                         size={34}
                     />
-                    <Slider />
+                    <Slider
+                        value={volume}
+                        onChange={(value) => setVolume(value)}
+                    />
                 </div>
             </div>
         </div>
