@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import MediaItem from "./mediaitem";
 import LikeButton from "./likebutton";
 import { Song } from "@/types";
@@ -8,6 +8,7 @@ import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import Slider from "./slider";
+import usePlayer from "@/hooks/usePlayer";
 
 
 interface PlayerContentProps {
@@ -19,9 +20,40 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
     song,
     songUrl
 }) => {
-    // TODO: remove hardcoded `false` that will permanently show a Play button in mobile view
+    const player = usePlayer();
+
     const Icon = false ? BsPauseFill : BsPlayFill;
     const VolumeIcon = true ? HiSpeakerXMark : HiSpeakerWave
+
+    const onPlayPrevious = () => {
+        if (player.ids.length === 0) {
+            return;
+        }
+    
+        const currentIndex = player.ids.findIndex((id) => id === player.activeId);
+        const previousSong = player.ids[currentIndex - 1]
+
+        if (!previousSong){
+            return player.setId(player.ids[player.ids.length - 1])
+        }
+
+        player.setId(previousSong);
+    };
+
+    const onPlayNext = () => {
+        if (player.ids.length === 0) {
+            return;
+        }
+    
+        const currentIndex = player.ids.findIndex((id) => id === player.activeId);
+        const nextSong = player.ids[currentIndex + 1]
+
+        if (!nextSong){
+            return player.setId(player.ids[0])
+        }
+
+        player.setId(nextSong);
+    };
 
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 h-full">
@@ -77,7 +109,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
             >
                 <AiFillStepBackward
                     size={30}
-                    onClick = {() => {}}
+                    onClick = {onPlayPrevious}
                     className="
                         text-neutral-400
                         cursor-pointer
@@ -103,7 +135,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
                 </div>
                 <AiFillStepForward
                     size={30}
-                    onClick = {() => {}}
+                    onClick = {onPlayNext}
                     className="
                         text-neutral-400
                         cursor-pointer
