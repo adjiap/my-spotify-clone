@@ -178,5 +178,5 @@ export {
     upsertProductRecord,
     upsertPriceRecord,
     createOrRetrieveCustomer,
-    copyBillingDetailsToCustomer,
+    manageSubscriptionStatusChange,
 };
