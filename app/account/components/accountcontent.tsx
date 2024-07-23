@@ -42,10 +42,13 @@ const AccountContent = () => {
             {!subscription && (
                 <div className="flex flex-col gap-y-4">
                     <p>No active plan</p>
+                    {/* TODO: Create direct subscription when clicked, instead of opening a popup modal first */}
                     <Button
                         onClick={subscribeModal.onOpen}
                         className="w-[300px]"
                     >
+                        {/* TODO: Placeholder only, `Premium` may need to be dynamic, but if there's multiple subscription plans, then it might make sense to keep it this way */}
+                        {`Subscribe to Premium plan!`}  
                     </Button>
                 </div>
             )}
