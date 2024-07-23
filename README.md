@@ -1,27 +1,23 @@
-Original code was written by Youtuber, Code With Antonio, on [Youtube](https://www.youtube.com/watch?v=2aeMRB8LL4o&ab_channel=CodeWithAntonio)
+# Introduction
+Original code was written by Youtuber, CodeWithAntonio, on [Youtube](https://www.youtube.com/watch?v=2aeMRB8LL4o&ab_channel=CodeWithAntonio), though it was created using Node.js 14 and [React](https://react.dev/) framework
 
-This repository is intended for me to document my steps following Antonio's tutorial as well as learning a framework. It's not intended to use for commercial purposes. The Stripe API that will be later implemented is only used for learning purposes, and using my own money for myself.
+This repository is intended for me to document my steps following Antonio's tutorial as well as learning a framework. It's not intended to use for commercial purposes. The Stripe API that will be later implemented is only used for learning purposes, ~~and using my own money for myself~~ (I later found out, that you don't need any :D).
 
----
+ I thought it would be educational for anyone that is "intermediate enough" to recognize what to do, without looking at what Antonio did, and so I left the release tags. Each release tags, would mean the release of new features in application, based on the original youtube video.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Requirement
+- A [Supabase](https://supabase.com/) project (free account)
+- A [Stripe](https://stripe.com/en-de) account (free account)
+- Node.js 14
+# Quickstart
 
-## Getting Started
-
-First, run the development server:
-
+After cloning the repository, run the following for local development:
 ```bash
+# ./Path/to/spotify/clone/repo
+# Install all the packages
+npm i
+
+# Run the web application locally
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
