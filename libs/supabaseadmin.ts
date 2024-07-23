@@ -12,6 +12,14 @@ export const supabaseAdmin = createClient<Database>(
     process.env.SUPABASE_SERVICE_ROLE_KEY  || "",
 );
 
+/**
+ * Upserts a Stripe Product record into the Supabase database.
+ * If the Product with the given ID exists, it updates the record; otherwise, it inserts a new record.
+ *
+ * @param {Stripe.Product} product - The Stripe Product object to be upserted.
+ * @throws {Error} - Throws an error if there are issues during the upsert process.
+ * @returns {Promise<void>} - A promise that resolves once the upsert operation is complete.
+ */
 const upsertProductRecord = async (product: Stripe.Product) => {
     const productData: Product = {
         id: product.id,
@@ -31,6 +39,14 @@ const upsertProductRecord = async (product: Stripe.Product) => {
     console.log (`Product inserted/updated: ${product.id}`);
 };
 
+/**
+ * Upserts a Stripe Price record into the Supabase database.
+ * If the Price with the given ID exists, it updates the record; otherwise, it inserts a new record.
+ *
+ * @param {Stripe.Price} price - The Stripe Price object to be upserted.
+ * @throws {Error} - Throws an error if there are issues during the upsert process.
+ * @returns {Promise<void>} - A promise that resolves once the upsert operation is complete.
+ */
 const upsertPriceRecord = async (price: Stripe.Price) => {
     const priceData: Price = {
         id: price.id,
@@ -55,6 +71,14 @@ const upsertPriceRecord = async (price: Stripe.Price) => {
     console.log (`Price inserted/updated: ${price.id}`);
 };
 
+/**
+ * Creates or retrieves a customer based on the provided Supabase UUID and email.
+ * If a customer with the given UUID exists, it retrieves the associated Stripe customer ID.
+ * If not, it creates a new customer on both Stripe and Supabase, associating them with the UUID.
+ *
+ * @returns {Promise<string>} - A promise that resolves with the Stripe customer ID.
+ * @throws {Error} - Throws an error if there are issues creating or retrieving the customer.
+ */
 const createOrRetrieveCustomer = async ({
     email,
     uuid
@@ -92,6 +116,15 @@ const createOrRetrieveCustomer = async ({
     return data.stripe_customer_id;
 };
 
+/**
+ * Copies billing details from a given Stripe payment method to the associated customer.
+ * Updates both the Stripe customer and Supabase user records with the new billing information.
+ *
+ * @param {string} uuid - The ID of the user in the Supabase database.
+ * @param {Stripe.PaymentMethod} payment_method - The Stripe payment method containing billing details.
+ * @returns {Promise<void>} - A promise that resolves once the billing details are copied and records are updated.
+ * @throws {Error} - Throws an error if there are issues updating the customer's billing details.
+ */
 const copyBillingDetailsToCustomer = async (
     uuid: string,
     payment_method: Stripe.PaymentMethod
@@ -115,6 +148,15 @@ const copyBillingDetailsToCustomer = async (
     if (error) throw error;
 };
 
+/**
+ * Manages subscription status changes by updating database records.
+ *
+ * @param {string} subscriptionId - Stripe subscription ID.
+ * @param {string} customerId - Customer ID associated with the subscription.
+ * @param {boolean} createAction - Trigger action to copy billing details to the customer.
+ * @returns {Promise<void>} - Resolves once database updates are complete.
+ * @throws {Error} - Throws an error on issues with subscription data retrieval or update.
+ */
 const manageSubscriptionStatusChange = async (
     subscriptionId: string,
     customerId: string,
