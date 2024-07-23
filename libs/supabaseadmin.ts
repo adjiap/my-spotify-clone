@@ -58,7 +58,7 @@ const upsertPriceRecord = async (price: Stripe.Price) => {
         unit_amount: price.unit_amount ?? undefined,
         interval: price.recurring?.interval,
         interval_count: price.recurring?.interval_count,
-        trial_period_day: price.recurring?.trial_period_days,
+        trial_period_days: price.recurring?.trial_period_days,
         metadata: price.metadata,
     };
 
