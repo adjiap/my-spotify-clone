@@ -46,6 +46,11 @@ export interface Price{
     products?: Product;
 }
 
+// Type extension for Product with its price
+export interface ProductWithPrice extends Product {
+    prices?: Price[];
+}
+
 export interface Subscription {
     // The fields below are Stripe specific fields. They may need to be updated if Stripe updates their API
     id: string;
